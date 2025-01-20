@@ -217,7 +217,7 @@ export class AppComponent implements OnInit {
         )
       ),
     });
-    if (index) {
+    if (index != null) {
       formArray.insert(index + 1, group);
       return;
     }
@@ -304,14 +304,6 @@ export class AppComponent implements OnInit {
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         tap(async ([control, income, expense]) => {
-          if (
-            !this.controlFormGroup.invalid ||
-            !this.incomeFormArray.invalid ||
-            !this.expenseFormArray.invalid
-          ) {
-            return;
-          }
-
           await refreshAsync();
 
           await Promise.all([

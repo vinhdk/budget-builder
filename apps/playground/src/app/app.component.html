@@ -110,7 +110,7 @@
                   context: {
                     $implicit: group.controls.main.controls,
                     focus: partIndex === 0 && groupIndex === 0,
-                    index: groupIndex,
+                    rowIndex: groupIndex,
                     categories: group.controls.categories,
                     main: true,
                   }
@@ -136,7 +136,7 @@
                     context: {
                       $implicit: category.controls,
                       focus: false,
-                      index: index,
+                      rowIndex: index,
                       categories: group.controls.categories,
                     }
                   " />
@@ -197,7 +197,7 @@
   #categoryTemplate
   let-controls
   let-focus="focus"
-  let-index="index"
+  let-rowIndex="rowIndex"
   let-categories="categories"
   let-main="main">
   <tr>
@@ -211,13 +211,13 @@
           [class.invalid]="controls.label | avnonFormError"
           [placeholder]="'Label'"
           [formControl]="controls.label"
-          (enterEvent)="addCategory(categories, main ? -1 : index)" />
+          (enterEvent)="addCategory(categories, main ? -1 : rowIndex)" />
         @if (!main) {
           <button
             saoButton
             [appearance]="'error'"
             [size]="'small'"
-            (click)="deleteCategory(categories, index)">
+            (click)="deleteCategory(categories, rowIndex)">
             <i [saoIcon]="'sao-icon-outlined-action-delete'"></i>
           </button>
         }
@@ -235,7 +235,7 @@
               index: index,
             }">
             <input
-              (enterEvent)="addCategory(categories, main ? -1 : index)"
+              (enterEvent)="addCategory(categories, main ? -1 : rowIndex)"
               avnonHandler
               type="text"
               saoInput
