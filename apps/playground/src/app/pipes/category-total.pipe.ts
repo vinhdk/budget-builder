@@ -18,10 +18,11 @@ export class SAOCategoryTotalPipe implements PipeTransform {
   private __sum(values: number[][]): number[] {
     return values.reduce((acc, value) => {
       value.forEach((month, index) => {
+        const checkedMonth = isNaN(month) ? 0 : month;
         if (acc[index] != null) {
-          acc[index] += month;
+          acc[index] += checkedMonth;
         } else {
-          acc.push(month);
+          acc.push(checkedMonth);
         }
       });
       return acc;

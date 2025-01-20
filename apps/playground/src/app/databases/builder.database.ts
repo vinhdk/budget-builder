@@ -1,4 +1,4 @@
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import Dexie, { Table } from 'dexie';
 import { Parts } from '../enums';
 import {
@@ -47,9 +47,18 @@ export async function createOrUpdateBuilderControlAsync(
   formGroup =
     /* To set default formGroup if not provided */ formGroup ??
     new FormGroup<BuilderControlFormGroup['controls']>({
-      label: new FormControl<string>('Budget Builder', { nonNullable: true }),
-      start: new FormControl<string>('2024-01', { nonNullable: true }),
-      end: new FormControl<string>('2024-12', { nonNullable: true }),
+      label: new FormControl<string>('Budget Builder', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
+      start: new FormControl<string>('2024-01', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
+      end: new FormControl<string>('2024-12', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
     });
 
   /* Get the first builder control from database */
@@ -121,7 +130,10 @@ export async function createOrUpdateBuilderGroupAsync(
     /* To set default formGroup if not provided */ formGroup ??
     new FormGroup<BuilderGroupFormGroup['controls']>({
       main: new FormGroup<BuilderGroupFormGroupMain['controls']>({
-        label: new FormControl<string>('Main', { nonNullable: true }),
+        label: new FormControl<string>('Main', {
+          nonNullable: true,
+          validators: [Validators.required],
+        }),
         months: new FormArray<FormControl<number>>([]),
       }),
       categories: new FormArray<BuilderCategoryFormGroup>([]),
@@ -174,7 +186,10 @@ export async function createOrUpdateBuilderCategoryAsync(
   formGroup =
     /* To set default formGroup if not provided */ formGroup ??
     new FormGroup<BuilderCategoryFormGroup['controls']>({
-      label: new FormControl<string>('', { nonNullable: true }),
+      label: new FormControl<string>('', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
       months: new FormArray<FormControl<number>>([]),
     });
 
@@ -219,7 +234,12 @@ export async function createOrUpdateBuilderMonthsAsync(
 
   /* 2. Create a new form control for each value and push to form array */
   for (const month of value) {
-    formArray.push(new FormControl<number>(month, { nonNullable: true }));
+    formArray.push(
+      new FormControl<number>(month, {
+        nonNullable: true,
+        validators: [Validators.required, Validators.min(0)],
+      })
+    );
   }
 
   return formArray;

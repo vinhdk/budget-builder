@@ -12,6 +12,7 @@
           <input
             type="month"
             saoInput
+            [class.invalid]="controlFormGroup.controls.start | avnonFormError"
             [placeholder]="'Start'"
             [formControl]="controlFormGroup.controls.start" />
         </label>
@@ -19,6 +20,7 @@
           <input
             type="month"
             saoInput
+            [class.invalid]="controlFormGroup.controls.end | avnonFormError"
             [placeholder]="'End'"
             [formControl]="controlFormGroup.controls.end" />
         </label>
@@ -43,6 +45,9 @@
                 <input
                   type="text"
                   saoInput
+                  [class.invalid]="
+                    controlFormGroup.controls.label | avnonFormError
+                  "
                   [placeholder]="'Title'"
                   [formControl]="controlFormGroup.controls.label" />
               </label>
@@ -90,7 +95,7 @@
                     <button
                       saoButton
                       [appearance]="'error'"
-                      [size]="'small'"
+                      [size]="'xsmall'"
                       (click)="deleteGroup(part.array, groupIndex)">
                       <i [saoIcon]="'sao-icon-outlined-action-delete'"></i>
                     </button>
@@ -203,6 +208,7 @@
           [focus]="focus"
           type="text"
           saoInput
+          [class.invalid]="controls.label | avnonFormError"
           [placeholder]="'Label'"
           [formControl]="controls.label"
           (enterEvent)="addCategory(categories, main ? -1 : index)" />
@@ -235,6 +241,8 @@
               saoInput
               mask="separator.2"
               thousandSeparator=","
+              [class.invalid]="formControl | avnonFormError"
+              [isNumber]="true"
               [placeholder]="month | date: 'MMMM YYYY'"
               [formControl]="formControl" />
           </label>

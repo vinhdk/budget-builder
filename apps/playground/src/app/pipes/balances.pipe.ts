@@ -15,8 +15,8 @@ export class SAOBalancesPipe implements PipeTransform {
     const partPipe = new SAOPartTotalPipe();
     return this.__sum(parts.map(part => partPipe.transform(part))).reduce(
       (acc, value) => {
-        acc.opening.push(value.opening);
-        acc.closing.push(value.closing);
+        acc.opening.push(value.opening ?? 0);
+        acc.closing.push(value.closing ?? 0);
         return acc;
       },
       { opening: [] as number[], closing: [] as number[] }
@@ -30,10 +30,13 @@ export class SAOBalancesPipe implements PipeTransform {
     for (let i = 0; i < income.length; i++) {
       const item = { opening: 0, closing: 0 };
 
-      item.opening = result[i - 1] != null ? result[i - 1].closing : 0;
-      item.closing = item.opening + income[i] - expenses[i];
+      item.opening = result[i - 1] != null ? (result[i - 1].closing ?? 0) : 0;
+      item.closing = (item.opening ?? 0) + income[i] - expenses[i];
 
-      result.push(item);
+      result.push({
+        closing: isNaN(item.closing) ? 0 : item.closing,
+        opening: isNaN(item.opening) ? 0 : item.opening,
+      });
     }
 
     return result;

@@ -4,9 +4,11 @@ import {
   ElementRef,
   HostListener,
   inject,
+  input,
   model,
   output,
 } from '@angular/core';
+import { NgControl } from '@angular/forms';
 
 @Directive({
   selector: 'input[avnonHandler]',
@@ -14,7 +16,9 @@ import {
 })
 export class SAOInputHandlerDirective {
   public readonly enterEvent = output();
+  public readonly isNumber = input<boolean>(false);
   public readonly focus = model<boolean>(false);
+  public readonly control = inject(NgControl, { optional: true });
   public readonly elementRef = inject<ElementRef<HTMLInputElement>>(ElementRef);
 
   public constructor() {
@@ -52,9 +56,54 @@ export class SAOInputHandlerDirective {
       return;
     }
 
-    if (!this.focus() && /^[a-zA-Z0-9]$/.test(event.key)) {
-      this.focus.set(true);
+    if (event.key === 'Escape') {
+      this.focus.set(false);
       return;
+    }
+
+    if (!this.focus()) {
+      this.__keyHandler(event);
+      return;
+    }
+  }
+
+  private __keyHandler(event: KeyboardEvent): void {
+    if (event.key === 'Backspace' || event.key === 'Delete') {
+      this.elementRef.nativeElement.value = '';
+      this.focus.set(true);
+      this.control?.control?.markAsTouched();
+      this.control?.control?.markAsDirty();
+      this.control?.control?.setValue(null);
+      return;
+    }
+
+    if (event.ctrlKey || event.metaKey) {
+      if (event.key.toLowerCase() === 'c') {
+        navigator.clipboard
+          .writeText(this.elementRef.nativeElement.value)
+          .then(() => {
+            console.log('copied');
+          });
+        return;
+      } else if (event.key.toLowerCase() === 'v') {
+        navigator.clipboard.readText().then(text => {
+          if (this.isNumber() && isNaN(Number(text))) {
+            return;
+          }
+          this.elementRef.nativeElement.value = text;
+        });
+        return;
+      }
+      return;
+    }
+
+    const regex = (
+      this.isNumber() ? new RegExp(/^(?:[0-9]+|\.)$/) : /^[a-zA-Z0-9]$/
+    ).test(event.key);
+
+    if (regex) {
+      this.focus.set(true);
+      this.elementRef.nativeElement.value = event.key;
     }
   }
 

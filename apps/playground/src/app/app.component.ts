@@ -15,6 +15,7 @@ import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
 import {
   SAOAvatarDirective,
@@ -50,6 +51,7 @@ import {
   SAOBalancesPipe,
   SAOCategoryTotalPipe,
   SAOFormArrayControlDirective,
+  SAOFormErrorDirective,
   SAOPartTotalPipe,
   SAOProfitAndLossPipe,
 } from './pipes';
@@ -88,6 +90,7 @@ import {
     SAOPartTotalPipe,
     SAOProfitAndLossPipe,
     SAOBalancesPipe,
+    SAOFormErrorDirective,
   ],
   providers: [provideNgxMask()],
 })
@@ -100,9 +103,18 @@ export class AppComponent implements OnInit {
   public readonly controlFormGroup: BuilderControlFormGroup = new FormGroup<
     BuilderControlFormGroup['controls']
   >({
-    label: new FormControl<string>('Budget Builder', { nonNullable: true }),
-    start: new FormControl<string>('2024-01', { nonNullable: true }),
-    end: new FormControl<string>('2024-12', { nonNullable: true }),
+    label: new FormControl<string>('Budget Builder', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+    start: new FormControl<string>('2024-01', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
+    end: new FormControl<string>('2024-12', {
+      nonNullable: true,
+      validators: [Validators.required],
+    }),
   });
   public readonly incomeFormArray: BuilderPartFormArray =
     new FormArray<BuilderGroupFormGroup>([]);
@@ -191,10 +203,17 @@ export class AppComponent implements OnInit {
     index?: number
   ): void {
     const group = new FormGroup<BuilderCategoryFormGroup['controls']>({
-      label: new FormControl<string>('', { nonNullable: true }),
+      label: new FormControl<string>('', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
       months: new FormArray<FormControl<number>>(
         this.months().map(
-          () => new FormControl<number>(0, { nonNullable: true })
+          () =>
+            new FormControl<number>(0, {
+              nonNullable: true,
+              validators: [Validators.required, Validators.min(0)],
+            })
         )
       ),
     });
@@ -209,10 +228,17 @@ export class AppComponent implements OnInit {
     formArray.push(
       new FormGroup<BuilderGroupFormGroup['controls']>({
         main: new FormGroup<BuilderGroupFormGroupMain['controls']>({
-          label: new FormControl<string>('Group', { nonNullable: true }),
+          label: new FormControl<string>('Group', {
+            nonNullable: true,
+            validators: [Validators.required],
+          }),
           months: new FormArray<FormControl<number>>(
             this.months().map(
-              () => new FormControl<number>(0, { nonNullable: true })
+              () =>
+                new FormControl<number>(0, {
+                  nonNullable: true,
+                  validators: [Validators.required, Validators.min(0)],
+                })
             )
           ),
         }),
@@ -278,6 +304,14 @@ export class AppComponent implements OnInit {
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         tap(async ([control, income, expense]) => {
+          if (
+            !this.controlFormGroup.invalid ||
+            !this.incomeFormArray.invalid ||
+            !this.expenseFormArray.invalid
+          ) {
+            return;
+          }
+
           await refreshAsync();
 
           await Promise.all([
@@ -319,7 +353,12 @@ export class AppComponent implements OnInit {
   private __resolveMonths(controls: FormArray<FormControl<number>>): void {
     controls.clear();
     this.months().forEach(() => {
-      controls.push(new FormControl<number>(0, { nonNullable: true }));
+      controls.push(
+        new FormControl<number>(0, {
+          nonNullable: true,
+          validators: [Validators.required, Validators.min(0)],
+        })
+      );
     });
   }
 
