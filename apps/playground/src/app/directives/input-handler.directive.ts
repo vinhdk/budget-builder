@@ -51,6 +51,11 @@ export class SAOInputHandlerDirective {
       this.__arrowHandler(event);
       return;
     }
+
+    if (!this.focus() && /^[a-zA-Z0-9]$/.test(event.key)) {
+      this.focus.set(true);
+      return;
+    }
   }
 
   private __enterHandler(): void {
