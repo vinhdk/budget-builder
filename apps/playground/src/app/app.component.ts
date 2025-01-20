@@ -51,7 +51,6 @@ import {
   SAOBalancesPipe,
   SAOCategoryTotalPipe,
   SAOFormArrayControlDirective,
-  SAOFormErrorDirective,
   SAOPartTotalPipe,
   SAOProfitAndLossPipe,
 } from './pipes';
@@ -90,7 +89,6 @@ import {
     SAOPartTotalPipe,
     SAOProfitAndLossPipe,
     SAOBalancesPipe,
-    SAOFormErrorDirective,
   ],
   providers: [provideNgxMask()],
 })
