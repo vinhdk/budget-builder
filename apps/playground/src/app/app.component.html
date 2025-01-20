@@ -262,7 +262,12 @@
       </td>
       @for (month of months(); track month; let index = $index) {
         <td>
-          <span class="text-b3 text-branding-success-500">
+          <span
+            class="text-b3 {{
+              values[index] < 0
+                ? 'text-branding-error-500'
+                : 'text-branding-success-500'
+            }}">
             {{ values[index] | number: '1.2-2' }}
           </span>
         </td>
@@ -281,7 +286,12 @@
       </td>
       @for (month of months(); track month; let index = $index) {
         <td>
-          <span class="text-b3 text-branding-primary-500">
+          <span
+            class="text-b3 {{
+              values[index] < 0
+                ? 'text-branding-error-500'
+                : 'text-branding-primary-500'
+            }}">
             {{ values[index] | number: '1.2-2' }}
           </span>
         </td>
@@ -330,7 +340,12 @@
     </td>
     @for (month of months(); track month; let index = $index) {
       <td>
-        <span class="text-b3 text-branding-foreground-50">
+        <span
+          class="text-b3 {{
+            values[index] < 0
+              ? 'text-branding-error-500'
+              : 'text-branding-foreground-50'
+          }}">
           {{ values[index] | number: '1.2-2' }}
         </span>
       </td>
