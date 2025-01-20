@@ -1,4 +1,5 @@
 # Budget Builder
+<img width="1394" alt="Screenshot 2025-01-21 at 00 30 32" src="https://github.com/user-attachments/assets/f6064f64-0247-455a-b91a-26fd4a0e45eb" />
 
 ## Homepage
 
