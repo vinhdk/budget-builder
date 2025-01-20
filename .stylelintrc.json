@@ -1,0 +1,32 @@
+{
+  "root": true,
+  "extends": ["stylelint-config-standard-scss"],
+  "plugins": ["stylelint-scss"],
+  "ignoreFiles": ["**/*"],
+  "overrides": [
+    {
+      "files": ["*.scss", "*.css"],
+      "rules": {
+        "no-empty-source": null,
+        "rule-empty-line-before": null,
+        "selector-class-pattern": null,
+        "at-rule-no-unknown": null,
+        "custom-property-empty-line-before": null
+      }
+    },
+    {
+      "files": ["*.scss"],
+      "rules": {
+        "scss/at-if-no-null": null,
+        "scss/at-mixin-pattern": null,
+        "scss/at-rule-no-unknown": null,
+        "scss/dollar-variable-pattern": null,
+        "scss/dollar-variable-empty-line-before": null,
+        "scss/double-slash-comment-whitespace-inside": null,
+        "scss/double-slash-comment-empty-line-before": null,
+        "scss/at-mixin-argumentless-call-parentheses": null,
+        "scss/at-rule-conditional-no-parentheses": null
+      }
+    }
+  ]
+}

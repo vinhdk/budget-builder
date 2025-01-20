@@ -1,0 +1,162 @@
+{
+  "name": "@budget-builder/source",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {
+    "start": "nx serve playground",
+    "prepare": "husky"
+  },
+  "author": "Elias Vinh",
+  "homepage": "https://vinhdk.github.com/budget-builder",
+  "description": "Budget Builder",
+  "directories": {
+    "playground": "apps/playground"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vinhdk/budget-builder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vinhdk/budget-builder/issues",
+    "email": "anlalayker@gmail.com"
+  },
+  "keywords": [
+    "budget-builder",
+    "elias-vinh"
+  ],
+  "private": false,
+  "dependencies": {
+    "@angular/animations": "~19.0.0",
+    "@angular/cdk": "^19.1.0",
+    "@angular/common": "~19.0.0",
+    "@angular/compiler": "~19.0.0",
+    "@angular/core": "~19.0.0",
+    "@angular/forms": "~19.0.0",
+    "@angular/platform-browser": "~19.0.0",
+    "@angular/platform-browser-dynamic": "~19.0.0",
+    "@angular/router": "~19.0.0",
+    "@fontsource/work-sans": "latest",
+    "@sao-components/core": "latest",
+    "@sao-components/angular": "latest",
+    "@sao-icons/core": "latest",
+    "@sao-icons/types": "latest",
+    "@sao-palette/core": "latest",
+    "@sao-typography/core": "latest",
+    "dexie": "^4.0.11",
+    "ngx-mask": "^19.0.6",
+    "rxjs": "~7.8.0",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~19.0.0",
+    "@angular-devkit/core": "~19.0.0",
+    "@angular-devkit/schematics": "~19.0.0",
+    "@angular/cli": "~19.0.0",
+    "@angular/compiler-cli": "~19.0.0",
+    "@angular/language-service": "~19.0.0",
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.8.0",
+    "@nx/angular": "20.3.2",
+    "@nx/eslint": "20.3.2",
+    "@nx/eslint-plugin": "20.3.2",
+    "@nx/jest": "20.3.2",
+    "@nx/js": "20.3.2",
+    "@nx/web": "20.3.2",
+    "@nx/workspace": "20.3.2",
+    "@schematics/angular": "~19.0.0",
+    "@swc-node/register": "~1.9.1",
+    "@swc/core": "~1.5.7",
+    "@swc/helpers": "~0.5.11",
+    "@types/jest": "^29.5.12",
+    "@types/node": "18.16.9",
+    "@typescript-eslint/eslint-plugin": "^8.18.2",
+    "@typescript-eslint/parser": "^8.18.2",
+    "@typescript-eslint/utils": "^8.18.2",
+    "angular-eslint": "^19.0.2",
+    "autoprefixer": "^10.4.0",
+    "eslint": "^9.8.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "husky": "^9.1.7",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jest-preset-angular": "~14.4.0",
+    "jsonc-eslint-parser": "^2.4.0",
+    "lint-staged": "^15.2.11",
+    "nx": "20.3.2",
+    "nx-stylelint": "^18.0.0",
+    "postcss": "^8.4.5",
+    "prettier": "^3.4.2",
+    "prettier-eslint": "^16.3.0",
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "stylelint": "^16.12.0",
+    "stylelint-config-standard-scss": "^14.0.0",
+    "stylelint-scss": "^6.10.0",
+    "tailwindcss": "^3.0.2",
+    "ts-jest": "^29.1.0",
+    "ts-node": "10.9.1",
+    "tslib": "^2.3.0",
+    "typescript": "~5.6.2",
+    "typescript-eslint": "^8.13.0"
+  },
+  "engines": {
+    "node": "^18 || ^20 || ^23",
+    "pnpm": "^8 || ^9"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "tabWidth": 2,
+    "htmlWhitespaceSensitivity": "ignore",
+    "useTabs": false,
+    "plugins": [
+      "prettier-plugin-organize-imports"
+    ],
+    "semi": true,
+    "bracketSpacing": true,
+    "arrowParens": "avoid",
+    "trailingComma": "es5",
+    "bracketSameLine": true,
+    "printWidth": 80
+  },
+  "lint-staged": {
+    "*.{js,json,scss,css,html,md,ts}": [
+      "prettier --write"
+    ],
+    "*.{js,html,ts}": [
+      "eslint --fix"
+    ],
+    "*.{scss,css}": [
+      "stylelint --fix"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ],
+    "rules": {
+      "type-enum": [
+        2,
+        "always",
+        [
+          "breaking",
+          "release",
+          "chore",
+          "ci",
+          "docs",
+          "feat",
+          "fix",
+          "perf",
+          "refactor",
+          "revert",
+          "style",
+          "test",
+          "bump"
+        ]
+      ]
+    }
+  },
+  "packageManager": "pnpm@9.10.0"
+}
